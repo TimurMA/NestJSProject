@@ -15,7 +15,8 @@
       "@Database/*": ["src/database/*"],
       "@auth/*": ["src/auth/*"],
       "@Conference/*": ["src/conference/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@Middlewares/*": ["src/middlewares/*"]
     },
     "skipLibCheck": true,
     "strictNullChecks": false,

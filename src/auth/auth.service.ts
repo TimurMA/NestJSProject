@@ -38,7 +38,7 @@ export class AuthService {
   }
 
   findOneByEmail(email: string): Observable<UserDTO> {
-    return from(this.authRepository.getUserById(email)).pipe(
+    return from(this.authRepository.getUserByEmail(email)).pipe(
       map((result) => {
         if (!result) {
           throw new UnauthorizedException();
@@ -68,10 +68,10 @@ export class AuthService {
             }
             return from(
               this.jwtService.signAsync({
-                firstName: userDTO.firstName,
-                lastName: userDTO.lastName,
-                email: userDTO.email,
-                id: userDTO.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                id: user.id,
               }),
             ).pipe(
               catchError((error) => {

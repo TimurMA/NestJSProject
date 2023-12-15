@@ -1,11 +1,10 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
 import { UserDTO } from '@auth/models/dto/user.dto';
 import { AuthService } from '@auth/auth.service';
 
 import { AuthenticationPrincipal } from '@utils/jwt-auth/jwt-auth.authentication.principal';
-import { AuthGuard } from '@utils/jwt-auth/jwt-auth.guard';
 
 @Controller('/api/profile')
 export class AuthController {
@@ -21,25 +20,23 @@ export class AuthController {
     return this.userService.login(userDTO);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('/user/:id')
-  getUserById(
-    @Param('id') id: string,
-    @AuthenticationPrincipal() user: UserDTO,
-  ): Observable<UserDTO> {
-    console.log(user);
+  @Get('/user/id/:id')
+  getUserById(@Param('id') id: string): Observable<UserDTO> {
     return this.userService.findOneById(id);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('/user/:email')
+  @Get('/user/email/:email')
   getUserByEmail(@Param('email') email: string): Observable<UserDTO> {
     return this.userService.findOneByEmail(email);
   }
 
-  @UseGuards(AuthGuard)
-  @Get('/user')
+  @Get('/users')
   getAllUsers(): Observable<UserDTO[]> {
     return this.userService.findAll();
+  }
+
+  @Get('/user/token')
+  getUser(@AuthenticationPrincipal() user: UserDTO) {
+    return user;
   }
 }
